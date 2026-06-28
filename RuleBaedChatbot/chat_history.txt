@@ -1,0 +1,19 @@
+
+Welcome sowndu!
+Department: IT
+Skill Level: Beginner
+
+sowndu selected option 5
+
+Web Development:
+- HTML
+- CSS
+- JavaScript
+- React
+- Backend Development
+
+
+
+===== New Session : sow =====
+sow: bye
+Bot: Goodbye sow! All the best for your career.
