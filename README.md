@@ -52,7 +52,7 @@ A simple recommendation system that suggests movies based on the user's selected
 ## Technologies Used
 
 - Python
-- Jupyter Notebook
+- Google Colab
 - Visual Studio Code
 
 ---
