@@ -1,11 +1,15 @@
 # AI Internship Projects
 
-This repository contains the AI internship tasks completed as part of my internship. Each project is implemented in Python and demonstrates a fundamental AI concept through a console-based application.
+This repository contains the AI internship tasks completed as part of my internship. Each project demonstrates a different AI concept using Python.
 
 ## Projects
 
-### Task 1: Rule-Based Chatbot
+### 1. Rule-Based Chatbot
 A simple chatbot that responds to user inputs using predefined rules and conditional statements.
+
+**Files:**
+- `chatbot.py`
+- `chat_history.txt`
 
 **Key Concepts:**
 - Conditional Statements
@@ -16,68 +20,57 @@ A simple chatbot that responds to user inputs using predefined rules and conditi
 
 ---
 
-### Task 2: Tic-Tac-Toe AI using Minimax
-A console-based Tic-Tac-Toe game where the computer uses the Minimax algorithm to make intelligent moves.
+### 2. Image Captioning
+An AI project that generates captions for images using a deep learning model. The implementation is provided in a Jupyter Notebook.
+
+**File:**
+- `Image_Captioning.ipynb`
 
 **Key Concepts:**
-- Minimax Algorithm
-- Game Logic
-- Recursion
-- Decision Making
-- Python Functions
+- Image Processing
+- Deep Learning
+- Computer Vision
+- Image Caption Generation
 
 ---
 
-### Task 3: Recommendation System
-A simple content-based recommendation system that suggests movies based on the user's selected category.
+### 3. Movie Recommendation System
+A simple recommendation system that suggests movies based on the user's selected category.
+
+**File:**
+- `recommendation_system.py`
 
 **Key Concepts:**
-- Content-Based Recommendation
+- Recommendation Systems
+- Content-Based Filtering
 - Dictionaries
 - Lists
-- Conditional Statements
 - User Input
 
 ---
 
 ## Technologies Used
 
-- Python 3
+- Python
+- Jupyter Notebook
 - Visual Studio Code
-
----
-
-## How to Run
-
-1. Clone this repository.
-2. Open the desired project folder.
-3. Run the corresponding Python file using:
-
-```bash
-python filename.py
-```
-
-Example:
-
-```bash
-python chatbot.py
-```
 
 ---
 
 ## Repository Structure
 
 ```
-AI-Internship/
+Codsoft-Internship/
 │
-├── Task-1-Rule-Based-Chatbot/
-│   └── chatbot.py
+├── RuleBasedChatbot/
+│   ├── chatbot.py
+│   └── chat_history.txt
 │
-├── Task-2-Tic-Tac-Toe-AI/
-│   └── tic_tac_toe.py
+├── Image_Captioning/
+│   └── Image_Captioning.ipynb
 │
-├── Task-3-Recommendation-System/
-│   └── recommendation.py
+├── Movie_Recommendation_System/
+│   └── system.py
 │
 └── README.md
 ```
@@ -86,14 +79,14 @@ AI-Internship/
 
 ## Learning Outcomes
 
-Through these projects, I gained hands-on experience with:
+Through these projects, I gained practical experience in:
 
 - Rule-Based AI
-- Game AI using the Minimax Algorithm
+- Image Captioning
 - Recommendation Systems
-- Problem Solving
 - Python Programming
-- AI Fundamentals
+- Artificial Intelligence Fundamentals
+- Problem Solving
 
 ---
 
