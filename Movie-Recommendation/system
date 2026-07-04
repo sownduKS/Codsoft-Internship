@@ -1,0 +1,94 @@
+import pandas as pd
+
+# Mock dataset of movies
+movies_data = {
+    'movie_id': [1, 2, 3, 4, 5, 6],
+    'title': ['The Dark Knight', 'Avengers: Endgame', 'Superbad', 'The Hangover', 'Interstellar', 'Arrival'],
+    'genres': ['Action, Crime, Drama', 'Action, Sci-Fi, Adventure', 'Comedy', 'Comedy', 'Sci-Fi, Drama, Adventure', 'Sci-Fi, Drama, Mystery']
+}
+
+# Create a DataFrame
+df_movies = pd.DataFrame(movies_data)
+print("--- Movies Dataset ---")
+print(df_movies)
+# Split the genre strings into lists
+df_movies['genres_list'] = df_movies['genres'].apply(lambda x: [g.strip() for g in x.split(',')])
+
+# Explode the list and use get_dummies to create the one-hot encoded matrix
+genre_matrix = df_movies['genres_list'].str.join('|').str.get_dummies()
+
+# Combine the movie titles back with our new genre matrix
+df_features = pd.concat([df_movies[['movie_id', 'title']], genre_matrix], axis=1)
+
+print("--- One-Hot Encoded Features ---")
+print(df_features.head())
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Extract just the numeric genre columns (excluding 'movie_id' and 'title')
+genre_features = df_features.drop(columns=['movie_id', 'title'])
+
+# Calculate the cosine similarity matrix
+# This compares every movie row against every other movie row
+similarity_matrix = cosine_similarity(genre_features)
+
+# Convert it to a readable DataFrame with movie titles as rows and columns
+df_similarity = pd.DataFrame(similarity_matrix, index=df_movies['title'], columns=df_movies['title'])
+
+print("--- Similarity Matrix ---")
+print(df_similarity.round(2))
+def get_recommendations(movie_title, top_n=2):
+    if movie_title not in df_similarity.index:
+        return f"Movie '{movie_title}' not found in the dataset."
+    
+    # Get the similarity scores for the given movie, sorted in descending order
+    movie_scores = df_similarity[movie_title].sort_values(ascending=False)
+    
+    # Drop the original movie itself so we don't recommend what they just watched
+    recommendations = movie_scores.drop(labels=[movie_title])
+    
+    # Return the top N recommendations
+    return recommendations.head(top_n)
+
+# --- Test the Recommendation System ---
+fav_movie = 'Interstellar'
+print(f"\nBecause you liked '{fav_movie}', you might also like:")
+print(get_recommendations(fav_movie, top_n=2))
+# Simulate a user who loves Sci-Fi but hasn't watched all movies yet
+# 5 = Loved it, 4 = Liked it
+user_ratings = {
+    'Interstellar': 5,
+    'Arrival': 4
+}
+
+print("--- User Ratings Loaded ---")
+for movie, rating in user_ratings.items():
+    print(f"User rated '{movie}': {rating}/5")
+
+    # 1. Pull the genre rows only for the movies the user has rated
+# We set the index to 'title' temporarily to easily grab the rows by name
+genre_matrix_indexed = df_features.set_index('title').drop(columns=['movie_id'])
+rated_movies_genres = genre_matrix_indexed.loc[user_ratings.keys()]
+
+# 2. Convert user ratings into a series/vector
+user_vector = pd.Series(user_ratings)
+
+# 3. Multiply the genres by the ratings and sum them up to get the profile
+# This performs a dot product between the genres and the user ratings
+user_profile = rated_movies_genres.T.dot(user_vector)
+
+print("--- User Taste Vector ---")
+print(user_profile.sort_values(ascending=False))
+
+# 1. Find movies the user hasn't watched yet
+unwatched_movies = genre_matrix_indexed.drop(index=user_ratings.keys())
+
+# 2. Calculate recommendation scores by multiplying unwatched movie genres by the user profile
+# Then sum the rows to get a total score for each movie
+recommendation_scores = unwatched_movies.dot(user_profile)
+
+# 3. Sort scores from highest to lowest
+recommendations = recommendation_scores.sort_values(ascending=False)
+
+print("\n--- Personalized Recommendations for the User ---")
+print(recommendations)
